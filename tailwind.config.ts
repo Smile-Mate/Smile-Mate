@@ -42,5 +42,53 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // @ts-expect-error addUtilities 타입 지정 에러
+    ({ addUtilities }) => {
+      addUtilities({
+        '.text-display1': {
+          '@apply font-bold text-[40px]': '',
+        },
+        '.text-display2': {
+          '@apply font-bold text-[36px]': '',
+        },
+        '.text-display3': {
+          '@apply font-bold text-[32px]': '',
+        },
+        '.text-display4': {
+          '@apply font-bold text-[28px]': '',
+        },
+        '.text-display5': {
+          '@apply font-bold text-[24px]': '',
+        },
+        '.text-headline': {
+          '@apply font-bold text-[20px]': '',
+        },
+        '.text-subhead1': {
+          '@apply font-bold text-[16px]': '',
+        },
+        '.text-subhead2': {
+          '@apply font-bold text-[14px]': '',
+        },
+        '.text-subhead3': {
+          '@apply font-bold text-[12px]': '',
+        },
+        '.text-body1': {
+          '@apply font-normal text-[20px]': '',
+        },
+        '.text-body2': {
+          '@apply font-normal text-[16px]': '',
+        },
+        '.text-body3': {
+          '@apply font-normal text-[14px]': '',
+        },
+        '.text-caption1': {
+          '@apply font-normal text-[12px]': '',
+        },
+        '.text-caption2': {
+          '@apply font-normal text-[10px]': '',
+        },
+      });
+    },
+  ],
 } satisfies Config;

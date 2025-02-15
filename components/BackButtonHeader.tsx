@@ -24,7 +24,7 @@ export default function BackButtonHeader({
       )}
       <div className="my-auto">
         <div onClick={() => router.back()} className="cursor-pointer flex justify-center items-center w-16 h-10">
-          <Image src="/svg/chevron-left.svg" alt="back" width={16} height={16} />
+          <Image src="/svg/chevron-left.svg" alt="back" width={12} height={12} />
         </div>
       </div>
       {children}

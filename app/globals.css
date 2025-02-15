@@ -4,3 +4,7 @@
 @layer tailwind {
   @tailwind base;
 }
+
+* {
+  background-color: #f4f4f4;
+}

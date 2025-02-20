@@ -5,6 +5,7 @@ import BottomPortal from '@/components/BottomPortal';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
+import PageIntro from '@/components/PageIntro';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -13,12 +14,12 @@ export default function LoginNameContainer() {
     <>
       <BackButtonHeader />
       <Container className="h-screen">
-        <PaddingBlock className="flex flex-col gap-[14px] pt-4">
-          <div className="text-display5 text-neutral-800 whitespace-pre-wrap">{`5주간 함께할 친구의
-이름을 지어주세요`}</div>
-          <div className="text-body2 text-neutral-600 whitespace-pre-wrap">{`2글자 이상 8글자 이하의
-한글 또는 영문으로 입력해주세요.`}</div>
-          <Image src="/images/jaerong.png" className="mt-5 mx-auto" width={240} height={240} alt="friend" />
+        <PaddingBlock className="flex flex-col">
+          <PageIntro
+            title={`5주간 함께할 친구의\n이름을 지어주세요`}
+            description={`2글자 이상 8글자 이하의\n한글 또는 영문으로 입력해주세요.`}
+          />
+          <Image src="/images/jaerong.png" className="mt-10 mx-auto" width={240} height={240} alt="friend" />
           <input type="text" className="mt-5 p-3 border-[0.4px] border-neutral-500 rounded-lg" />
         </PaddingBlock>
       </Container>

@@ -5,6 +5,7 @@ import BottomPortal from '@/components/BottomPortal';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
+import PageIntro from '@/components/PageIntro';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -16,12 +17,13 @@ export default function FriendSmileContainer() {
     <>
       <BackButtonHeader />
       <Container>
-        <PaddingBlock className="mt-5">
-          <div className="text-display5 text-neutral-800 whitespace-pre-wrap">
-            {completed ? `웃음 지어주기 성공!` : `카메라를 보고\n웃음을 지어주세요`}
-          </div>
+        <PaddingBlock>
+          {!completed && <PageIntro title={`카메라를 보고\n웃음을 지어주세요`} />}
           {completed && (
-            <div className="text-body2 text-neutral-600 whitespace-pre-wrap">{`식별 번호는 사전에 안내드린\n문자 메시지에서 확인할 수 있어요.`}</div>
+            <PageIntro
+              title="웃음 지어주기 성공!"
+              description={`웃음을 지어준 덕분에\n재롱이를 집으로 데려올 수 있게 되었어요.`}
+            />
           )}
           <Image src="/images/jaerong.png" className="mx-auto mt-20" alt="jaerong" width={300} height={300} />
           {completed && (

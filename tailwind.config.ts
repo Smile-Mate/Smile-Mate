@@ -42,6 +42,7 @@ export default {
       },
     },
   },
+  safelist: ['max-w-md'],
   plugins: [
     // @ts-expect-error addUtilities 타입 지정 에러
     ({ addUtilities }) => {

@@ -1,4 +1,4 @@
-import HomeContainer from "@/containers/HomeContainer";
+import HomeContainer from '@/containers/HomeContainer';
 
 export default async function HomePage() {
   return (

@@ -10,8 +10,9 @@ export default function HomeContainer() {
   return (
     <>
       <Container>
-        <div className="flex h-[90vh] w-full">
+        <div className="flex h-[100vh] w-full flex-col">
           <Image src={'/svg/logo.svg'} alt="Logo" width={200} height={200} className="m-auto" />
+          <div className="h-20" />
         </div>
       </Container>
       <BottomPortal>

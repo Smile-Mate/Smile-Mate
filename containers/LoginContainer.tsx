@@ -10,7 +10,7 @@ export default function LoginContainer() {
   return (
     <>
       <BackButtonHeader />
-      <Container>
+      <Container className="h-screen">
         <PaddingBlock className="flex flex-col gap-[14px] pt-4">
           <div className="text-display5 text-neutral-800">식별 번호를 입력해주세요</div>
           <div className="text-body2 text-neutral-600 whitespace-pre-wrap">{`식별 번호는 사전에 안내드린

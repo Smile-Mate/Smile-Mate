@@ -1,5 +1,7 @@
 import { MantineColorsTuple } from '@mantine/core';
 
+export const defaultBackgroundColor = '#F4F4F4';
+
 // LINK https://mantine.dev/colors-generator/?color=4E62A0
 export const mainColor: MantineColorsTuple = [
   '#fff4e1',

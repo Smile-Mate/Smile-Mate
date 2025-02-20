@@ -7,10 +7,11 @@ export default function Container({
   children,
   className = '',
   backgroundColor = defaultBackgroundColor,
-}: Readonly<{ children: React.ReactNode; className?: string; backgroundColor?: string }>) {
+  fullHeight = true,
+}: Readonly<{ children: React.ReactNode; className?: string; backgroundColor?: string; fullHeight?: boolean }>) {
   return (
     <div
-      className={`${className} flex flex-col ${appWidth} w-full mx-auto`}
+      className={`${className} ${fullHeight ? 'min-h-screen' : ''} flex flex-col ${appWidth} w-full mx-auto`}
       style={{ backgroundColor: backgroundColor }}
     >
       {children}

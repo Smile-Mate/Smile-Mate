@@ -27,7 +27,7 @@ export default function FriendMissionContainer() {
         </div>
       </Container>
       <BottomPortal>
-        <Link href="/">
+        <Link href="/friend/mission/1/chat">
           <Button>시작하기</Button>
         </Link>
       </BottomPortal>

@@ -11,7 +11,7 @@ import Link from 'next/link';
 export default function FriendContainer() {
   return (
     <>
-      <Image src="/images/mission/mission1.jpeg" className="mx-auto -z-50 grayscale-[50%]" fill alt="friend" />
+      <Image src="/images/mission/mission1.jpg" className="mx-auto -z-50" fill alt="friend" />
       <Container backgroundColor="transparent">
         <div className="flex flex-col gap-3 mt-20">
           <Bubble text="나랑 놀아줘!!" className="mr-40" />

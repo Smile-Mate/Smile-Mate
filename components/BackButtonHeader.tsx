@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { defaultBackgroundColor } from '@/constants/themeConst';
+import { appWidth } from '@/constants/styleConst';
 
 export default function BackButtonHeader({
   children = null,
@@ -26,7 +27,7 @@ export default function BackButtonHeader({
       {/* NOTE 헤더바 */}
       <div className="fixed top-0 w-full z-50">
         <div
-          className={`${className} flex justify-between h-[50px] pr-[26px] relative`}
+          className={`${className} ${appWidth} mx-auto flex justify-between h-[50px] pr-[26px] relative`}
           style={{ backgroundColor: backgroundColor }}
         >
           {title && (

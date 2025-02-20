@@ -20,6 +20,7 @@ export default function LoginNameContainer() {
 한글 또는 영문으로 입력해주세요.`}</div>
           <Image src="/img/jaerong.png" className="mt-5 mx-auto" width={240} height={240} alt="friend" />
           <input type="text" className="mt-5 p-3 border-[0.4px] border-neutral-500 rounded-lg" />
+          {/* <Bubble>오늘 기분은 어때?</Bubble> */}
         </PaddingBlock>
       </Container>
       <BottomPortal>

@@ -5,6 +5,7 @@ import BottomPortal from '@/components/BottomPortal';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
+import Link from 'next/link';
 
 export default function LoginContainer() {
   return (
@@ -19,7 +20,9 @@ export default function LoginContainer() {
         </PaddingBlock>
       </Container>
       <BottomPortal>
-        <Button>다음으로</Button>
+        <Link href="/login/name">
+          <Button>다음으로</Button>
+        </Link>
       </BottomPortal>
     </>
   );

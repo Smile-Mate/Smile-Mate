@@ -44,20 +44,23 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
     );
     const faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, options);
 
-    const video = document.getElementById('video') as HTMLVideoElement;
-    videoRef.current = video;
+    // const video = document.getElementById('video') as HTMLVideoElement;
+    // videoRef.current = video;
 
+    // TODO ref 에 대해 더 알아보기
     navigator.mediaDevices
       .getUserMedia({
         video: { width: 1280, height: 720 },
         audio: false,
       })
       .then(function (stream) {
-        video.srcObject = stream;
-        video.addEventListener('loadeddata', () => {
-          detectFaceExpressions(video); // 표정 감지 시작
-          predict(faceLandmarker); // mediapipe로 위치 및 회전 감지 시작
-        });
+        if (videoRef.current !== null) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.addEventListener('loadeddata', () => {
+            detectFaceExpressions(videoRef.current as HTMLVideoElement); // 표정 감지 시작
+            predict(faceLandmarker); // mediapipe로 위치 및 회전 감지 시작
+          });
+        }
       })
       .catch(function (error) {
         if (error.name === 'ConstraintNotSatisfiedError') {

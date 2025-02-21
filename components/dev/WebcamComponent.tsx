@@ -163,7 +163,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
     <div className="flex flex-col items-center justify-center">
       <div>detectCount:{detectCount}</div>
       <div>happyCount:{happyCount}</div>
-      <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
+      <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 100 }} autoPlay muted />
 
       <Canvas style={{ height: 240, width: '100%' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         <ambientLight intensity={1.5} />

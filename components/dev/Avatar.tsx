@@ -54,8 +54,5 @@ export default function Avatar({
     }
   });
 
-  return (
-    // @ts-expect-error - `primitive` prop is not recognized by React
-    <primitive object={scene} position={[0, -4.8, 3]} scale={[3.6, 3.6, 3.6]} />
-  );
+  return <primitive object={scene} position={[0, -4.8, 3]} scale={[3.6, 3.6, 3.6]} />;
 }

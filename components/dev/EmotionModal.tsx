@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import NeutralIcon from '@/public/icons/icon-neutral.svg';
-import SmileIcon from '@/public/icons/icon-smile.svg';
-import SmilerIcon from '@/public/icons/icon-smiler.svg';
-import RightDashIcon from '@/public/icons/icon-dash-right.svg';
+// import NeutralIcon from '@/public/icons/icon-neutral.svg';
+// import SmileIcon from '@/public/icons/icon-smile.svg';
+// import SmilerIcon from '@/public/icons/icon-smiler.svg';
+// import RightDashIcon from '@/public/icons/icon-dash-right.svg';
 import WebcamComponent from './WebcamComponent';
 
 // EmotionModalProps 인터페이스 정의
@@ -61,11 +61,11 @@ const EmotionModal: React.FC<EmotionModalProps> = ({
         ) : (
           <div>
             <div className="rounded-2xl w-full mt-[120px] border-dashed border-2 border-[#FFBC96] flex flex-row justify-center items-center gap-x-5 px-9 py-5">
-              <NeutralIcon width={40} height={40} />
+              {/* <NeutralIcon width={40} height={40} />
               <RightDashIcon width={20} height={16} />
               <SmileIcon width={40} height={40} />
               <RightDashIcon width={20} height={16} />
-              <SmilerIcon width={40} height={40} />
+              <SmilerIcon width={40} height={40} /> */}
             </div>
             <div className="mt-10 flex flex-col justify-center items-center gap-y-3">
               <h2 className="text-white text-2xl font-semibold">희연에게 밝은 웃음을 안겨주세요!</h2>

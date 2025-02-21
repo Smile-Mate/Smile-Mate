@@ -3,14 +3,11 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { FaceLandmarker, FaceLandmarkerOptions, FilesetResolver } from '@mediapipe/tasks-vision';
-import { AmbientLight, Color, Euler, Matrix4, PointLight } from 'three';
-import { Canvas, extend } from '@react-three/fiber';
+import { Color, Euler, Matrix4 } from 'three';
+import { Canvas } from '@react-three/fiber';
 import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
-
-// Three.js 요소를 JSX에서 사용할 수 있도록 확장
-extend({ AmbientLight, PointLight });
 
 const defaultAvatarUrl =
   'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
@@ -42,7 +39,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
 
   const setup = async () => {
     const filesetResolver = await FilesetResolver.forVisionTasks(
-      'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm'
+      'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm'
     );
     const faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, options);
 
@@ -60,6 +57,24 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
           detectFaceExpressions(video); // 표정 감지 시작
           predict(faceLandmarker); // mediapipe로 위치 및 회전 감지 시작
         });
+      })
+      .catch(function (error) {
+        if (error.name === 'ConstraintNotSatisfiedError') {
+          alert(
+            'The resolution ' +
+              // constraints.video.width.exact +
+              'x' +
+              // constraints.video.width.exact +
+              ' px is not supported by your device.'
+          );
+        } else if (error.name === 'PermissionDeniedError') {
+          alert(
+            'Permissions have not been granted to use your camera and ' +
+              'microphone, you need to allow the page access to your devices in ' +
+              'order for the demo to work.'
+          );
+        }
+        alert('getUserMedia error: ' + error.name);
       });
   };
 
@@ -144,13 +159,13 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
 
       <Canvas style={{ height: 240, width: '100%' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         {/* @ts-ignore */}
-        <AmbientLight intensity={1.5} />
+        <ambientLight intensity={1.5} />
         {/* @ts-ignore */}
-        <PointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />
+        <pointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />
         {/* @ts-ignore */}
-        <PointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
+        <pointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
         {/* @ts-ignore */}
-        <PointLight position={[0, 0, 10]} intensity={1.75} />
+        <pointLight position={[0, 0, 10]} intensity={1.75} />
         <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} />
       </Canvas>
     </div>

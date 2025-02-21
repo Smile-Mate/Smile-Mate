@@ -48,7 +48,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
 
     navigator.mediaDevices
       .getUserMedia({
-        video: { width: 1280, height: 720 },
+        video: true,
         audio: false,
       })
       .then(function (stream) {

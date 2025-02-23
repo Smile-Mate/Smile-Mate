@@ -21,7 +21,12 @@ export default function Avatar({
   // const { nodes } = useGraph(fbx);
   const [headMeshes, setHeadMeshes] = useState<Object3D[]>([]);
 
-  console.log(nodes);
+  // NOTE dev
+  useEffect(() => {
+    console.log('nodes', nodes);
+    console.log('blendshapes', blendshapes);
+    console.log('rotation', rotation);
+  }, [nodes, blendshapes, rotation]);
 
   useEffect(() => {
     const meshes = [];

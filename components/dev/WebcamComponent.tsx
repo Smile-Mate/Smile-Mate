@@ -58,6 +58,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
         if (videoRef.current !== null) {
           videoRef.current.srcObject = stream;
           videoRef.current.addEventListener('loadeddata', () => {
+            // TODO 프레임 당 1회 감지로 변경
             detectFaceExpressions(videoRef.current as HTMLVideoElement); // 표정 감지 시작
             predict(faceLandmarker); // mediapipe로 위치 및 회전 감지 시작
           });
@@ -104,6 +105,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
           setExpression(maxExpression);
           setExpressionScore(score);
           if (maxExpression === 'happy' && score > 0.5) {
+            // TODO happyCount가 쌓이는 속도가 기기에 따라 다름 -> 고치기
             setHappyCount(prev => {
               console.log('happyCount: ', prev + 1);
               return prev + 1;

@@ -10,7 +10,8 @@ import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 
 // const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';
-const defaultAvatarUrl = '/characters/test.glb'; //'/characters/ssrbs_2.0_hololive.glb';
+// const defaultAvatarUrl = '/characters/facial_blendshapes_test.glb';
+const defaultAvatarUrl = '/characters/test.glb';
 // 'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
 
 const options: FaceLandmarkerOptions = {
@@ -37,6 +38,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [happyCount, setHappyCount] = useState(0);
   const animationFrameIdRef = useRef<number | null>(null); // animationFrame ID 저장
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [detectCount, setDetectCount] = useState(0);
 
   const setup = async () => {
@@ -164,9 +166,10 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div>detectCount:{detectCount}</div>
-      <div>happyCount:{happyCount}</div>
-      <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 30 }} autoPlay muted />
+      {/* <div>detectCount:{detectCount}</div> */}
+      {/* <div>happyCount:{happyCount}</div> */}
+      <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
+      {/* <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 100 }} autoPlay muted /> */}
 
       <Canvas style={{ height: 240, width: '100%' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         <ambientLight intensity={1.5} />

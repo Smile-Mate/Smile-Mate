@@ -4,6 +4,7 @@ import BackButtonHeader from '@/components/BackButtonHeader';
 import BottomPortal from '@/components/BottomPortal';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
+import WebcamComponent from '@/components/dev/WebcamComponent';
 import PaddingBlock from '@/components/PaddingBlock';
 import PageIntro from '@/components/PageIntro';
 import Image from 'next/image';
@@ -25,7 +26,14 @@ export default function FriendSmileContainer() {
               description={`웃음을 지어준 덕분에\n재롱이를 집으로 데려올 수 있게 되었어요.`}
             />
           )}
-          <Image src="/images/jaerong.png" className="mx-auto mt-20" alt="jaerong" width={300} height={300} />
+          {!completed && (
+            <div className="mt-20">
+              <WebcamComponent setIsSuccess={() => setCompleted(true)} />
+            </div>
+          )}
+          {completed && (
+            <Image src="/images/jaerong.png" className="mx-auto mt-20" alt="jaerong" width={300} height={300} />
+          )}
           {completed && (
             <div className="flex flex-col gap-1 justify-center items-center mt-5">
               <Image src={'/svg/fooProgress2.svg'} width={295} height={295} alt="progress" />

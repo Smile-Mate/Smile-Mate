@@ -26,6 +26,7 @@ export default function Avatar({
     console.log('nodes', nodes);
     console.log('blendshapes', blendshapes);
     console.log('rotation', rotation);
+    // if (nodes.CC_Base_BoneRoot_01) nodes.CC_Base_BoneRoot_01.rotation.set(0, 0, 0);
   }, [nodes, blendshapes, rotation]);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function Avatar({
     if (nodes.Wolf3D_Beard) meshes.push(nodes.Wolf3D_Beard);
     if (nodes.Wolf3D_Avatar) meshes.push(nodes.Wolf3D_Avatar);
     if (nodes.Wolf3D_Head_Custom) meshes.push(nodes.Wolf3D_Head_Custom);
-    if (nodes.Object_7) meshes.push(nodes.Object_7);
+    // if (nodes.Object_65) meshes.push(nodes.Object_65);
 
     setHeadMeshes(meshes);
   }, [nodes, url]);
@@ -51,6 +52,7 @@ export default function Avatar({
     if (blendshapes.length > 0) {
       blendshapes.forEach((element: any) => {
         headMeshes.forEach((mesh: any) => {
+          // const index = mesh.morphTargetDictionary[element.index];
           const index = mesh.morphTargetDictionary[element.categoryName];
           if (index >= 0) {
             mesh.morphTargetInfluences[index] = element.score;
@@ -66,8 +68,12 @@ export default function Avatar({
     }
   });
 
+  // return <primitive object={scene} position={[0, -4.8, 3]} scale={[10, 10, 10]} />;
+  // return <primitive object={scene} position={[0, -4.8, 3]} scale={[5, 5, 5]} />;
   return <primitive object={scene} position={[0, -4.8, 3]} scale={[3.6, 3.6, 3.6]} />;
-  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[3, 3, 3]} />;
+  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[2.8, 2.8, 2.8]} />;
+  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[2.4, 2.4, 2.4]} />;
+  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[0.03, 0.03, 0.03]} />;
   // return <primitive object={scene} position={[0, -4.8, 3]} scale={[4, 4, 4]} />;
   // return <primitive object={fbx} position={[0, -4.8, 3]} scale={[0.02, 0.02, 0.02]} />;
 }

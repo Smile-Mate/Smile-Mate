@@ -4,7 +4,7 @@
 import { useGLTF } from '@react-three/drei';
 import { useFrame, useGraph } from '@react-three/fiber';
 import React, { useEffect, useState } from 'react';
-import { Object3D, Euler, Color } from 'three';
+import { Object3D, Euler } from 'three';
 
 export default function Avatar({
   url,
@@ -17,7 +17,11 @@ export default function Avatar({
 }) {
   const { scene } = useGLTF(url);
   const { nodes } = useGraph(scene);
+  // const fbx = useFBX(url);
+  // const { nodes } = useGraph(fbx);
   const [headMeshes, setHeadMeshes] = useState<Object3D[]>([]);
+
+  console.log(nodes);
 
   useEffect(() => {
     const meshes = [];
@@ -26,15 +30,18 @@ export default function Avatar({
     if (nodes.Wolf3D_Beard) meshes.push(nodes.Wolf3D_Beard);
     if (nodes.Wolf3D_Avatar) meshes.push(nodes.Wolf3D_Avatar);
     if (nodes.Wolf3D_Head_Custom) meshes.push(nodes.Wolf3D_Head_Custom);
+    if (nodes.Object_7) meshes.push(nodes.Object_7);
+
     setHeadMeshes(meshes);
   }, [nodes, url]);
 
-  scene.traverse((obj: any) => {
-    if (obj.isMesh) {
-      obj.material.color = new Color(1.2, 1.2, 1.2);
-    }
-  });
+  // scene.traverse((obj: any) => {
+  //   if (obj.isMesh) {
+  //     obj.material.color = new Color(1.2, 1.2, 1.2);
+  //   }
+  // });
 
+  // TODO 맥북에서 blendshapes, categoryName, score 확인하기
   useFrame(() => {
     if (blendshapes.length > 0) {
       blendshapes.forEach((element: any) => {
@@ -55,4 +62,7 @@ export default function Avatar({
   });
 
   return <primitive object={scene} position={[0, -4.8, 3]} scale={[3.6, 3.6, 3.6]} />;
+  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[3, 3, 3]} />;
+  // return <primitive object={scene} position={[0, -4.8, 3]} scale={[4, 4, 4]} />;
+  // return <primitive object={fbx} position={[0, -4.8, 3]} scale={[0.02, 0.02, 0.02]} />;
 }

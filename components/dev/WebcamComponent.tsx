@@ -9,8 +9,9 @@ import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 
-const defaultAvatarUrl =
-  'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
+// const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';
+const defaultAvatarUrl = '/characters/test.glb'; //'/characters/ssrbs_2.0_hololive.glb';
+// 'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
 
 const options: FaceLandmarkerOptions = {
   baseOptions: {
@@ -163,7 +164,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
     <div className="flex flex-col items-center justify-center">
       <div>detectCount:{detectCount}</div>
       <div>happyCount:{happyCount}</div>
-      <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 100 }} autoPlay muted />
+      <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 30 }} autoPlay muted />
 
       <Canvas style={{ height: 240, width: '100%' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         <ambientLight intensity={1.5} />

@@ -1,7 +1,7 @@
 'use client';
 
 import BottomPortal from '@/components/BottomPortal';
-// import Bubble from '@/components/Bubble';
+import Bubble from '@/components/Bubble';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 // TODO 폰트 적용하기
 export default function FriendContainer() {
-  const { friend } = useFriendStore();
+  const { friend, setFriend } = useFriendStore();
 
   return (
     <>
@@ -33,6 +33,8 @@ export default function FriendContainer() {
       </Container>
       <BottomPortal>
         <div className="flex flex-col gap-4">
+          {friend.message && <Bubble text={friend.message} className="" />}
+
           <Link href="/friend/mission/1">
             <Image src="/images/jaerong.png" className="mx-auto" width={240} height={240} alt="friend" />
           </Link>
@@ -40,7 +42,13 @@ export default function FriendContainer() {
             <div className="whitespace-pre-wrap text-body2 text-white">{`재롱이는 현재 매우 우울한 상태이다.
 길거리에서 무뚝뚝한 표정을 지으며 앉아 있다…`}</div>
             <Link href="/friend/smile">
-              <Button>웃음 지어주기</Button>
+              <Button
+                onClick={() => {
+                  setFriend({ message: undefined });
+                }}
+              >
+                웃음 지어주기
+              </Button>
             </Link>
           </div>
         </div>

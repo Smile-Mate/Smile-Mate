@@ -5,6 +5,7 @@ export interface Friend {
   name: string;
   score: number; // 1~100
   level: number; // 1~4, (Level 1: 1~25, Level 2: 25~50, Level 3: 50~75, Level 4: 75~100)
+  message?: string;
 }
 
 export interface FriendStore {
@@ -17,6 +18,7 @@ const defaultFriend: Friend = {
   name: '',
   score: 0,
   level: 1,
+  message: undefined,
 };
 
 export const useFriendStore = create(

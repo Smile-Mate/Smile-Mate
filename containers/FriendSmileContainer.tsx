@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function FriendSmileContainer() {
-  const { friend } = useFriendStore();
+  const { friend, setFriend } = useFriendStore();
   const [completed, setCompleted] = useState(false);
 
   return (
@@ -49,7 +49,17 @@ export default function FriendSmileContainer() {
         {/* {!completed && <Button onClick={() => setCompleted(true)}>다음으로</Button>} */}
         {completed && (
           <Link href={'/friend'}>
-            <Button>홈으로</Button>
+            <Button
+              onClick={() =>
+                setFriend({
+                  message: `방금 지어준 웃음은 굉장히 밝았던 것 같아!
+입꼬리를 조금만 더 올려보면
+더 환한 웃음이 될 것 같은데!`,
+                })
+              }
+            >
+              홈으로
+            </Button>
           </Link>
         )}
       </BottomPortal>

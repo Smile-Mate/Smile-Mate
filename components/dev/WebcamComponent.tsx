@@ -33,7 +33,13 @@ const options: FaceLandmarkerOptions = {
 
 let lastVideoTime = -1;
 
-export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (success: boolean) => void }) {
+export default function WebcamComponent({
+  setIsSuccess,
+  setHappyScore,
+}: {
+  setIsSuccess: (success: boolean) => void;
+  setHappyScore: (score: number) => void;
+}) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [blendshapes, setBlendshapes] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -127,7 +133,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
           setExpressionScore(score);
           if (maxExpression === 'happy' && score > 0.5) {
             // TODO happyCount가 쌓이는 속도가 기기에 따라 다름 -> 고치기
-
+            setHappyScore(score);
             setTimeout(() => {
               setIsSuccess(true);
             }, 3000);

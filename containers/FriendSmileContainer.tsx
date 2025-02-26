@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 export default function FriendSmileContainer() {
   const { friend, setFriend, addScore } = useFriendStore();
   const [completed, setCompleted] = useState(false);
+  const [happyScore, setHappyScore] = useState(0);
 
   useEffect(() => {
     if (completed) {
@@ -25,8 +26,28 @@ export default function FriendSmileContainer() {
 더 환한 웃음이 될 것 같은데!`,
       });
       addScore(20);
+      if (happyScore > 0) handleSend();
     }
-  }, [completed, setFriend, addScore]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completed]);
+
+  const handleSend = async () => {
+    try {
+      const response = await fetch('/api/openai/smile-feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: `happy socore: ${happyScore}` }),
+      });
+
+      const data = await response.json();
+
+      setFriend({ message: data.botResponse });
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <>
@@ -42,7 +63,7 @@ export default function FriendSmileContainer() {
           )}
           {!completed && (
             <div className="mt-20">
-              <WebcamComponent setIsSuccess={() => setCompleted(true)} />
+              <WebcamComponent setIsSuccess={() => setCompleted(true)} setHappyScore={setHappyScore} />
             </div>
           )}
           {completed && (

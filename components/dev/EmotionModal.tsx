@@ -22,6 +22,9 @@ const EmotionModal: React.FC<EmotionModalProps> = ({
   setIsDailyEmotionSuccess,
 }) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [happyScore, setHappyScore] = useState(0);
+
+  console.log('happyScore:', happyScore);
 
   useEffect(() => {
     if (isSuccess) {
@@ -74,7 +77,9 @@ const EmotionModal: React.FC<EmotionModalProps> = ({
           </div>
         )}
       </AnimatePresence>
-      <div className="mb-[86px]">{!isDailyEmotionSuccess && <WebcamComponent setIsSuccess={setIsSuccess} />}</div>
+      <div className="mb-[86px]">
+        {!isDailyEmotionSuccess && <WebcamComponent setIsSuccess={setIsSuccess} setHappyScore={setHappyScore} />}
+      </div>
     </section>
   );
 };

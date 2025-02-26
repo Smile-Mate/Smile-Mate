@@ -2,12 +2,13 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { FaceLandmarker, FaceLandmarkerOptions, FilesetResolver } from '@mediapipe/tasks-vision';
+import { FaceLandmarker, FaceLandmarkerOptions, FilesetResolver, NormalizedLandmark } from '@mediapipe/tasks-vision';
 import { Color, Euler, Matrix4 } from 'three';
 import { Canvas } from '@react-three/fiber';
 import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
+import { convertLandmarksToArray } from '@/utils/humeUtils';
 // import AvatarFBX from './AvatarFBX';
 // import AvatarElf from './AvatarElf';
 
@@ -33,6 +34,8 @@ let lastVideoTime = -1;
 export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (success: boolean) => void }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [blendshapes, setBlendshapes] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [landmarks, setLandmarks] = useState<NormalizedLandmark[][]>([]);
   const [rotation, setRotation] = useState<Euler | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [expression, setExpression] = useState<string>('neutral');
@@ -44,6 +47,9 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
   const animationFrameIdRef = useRef<number | null>(null); // animationFrame ID 저장
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [detectCount, setDetectCount] = useState(0);
+  // const socketRef = useRef<StreamSocket | null>(null);
+  const [fooNote, setFooNote] = useState('');
+  const [fooStatus, setFooStatus] = useState('');
 
   const [fooDetections, setFooDetections] = useState<
     faceapi.WithFaceExpressions<{
@@ -161,6 +167,42 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
         faceLandmarkerResult.faceBlendshapes[0].categories
       ) {
         setBlendshapes(faceLandmarkerResult.faceBlendshapes[0].categories);
+        setLandmarks(faceLandmarkerResult.faceLandmarks);
+
+        // setFooNote(faceLandmarkerResult.faceLandmarks[0].length.toString());
+        // convert landmarks to number[][][]
+        // sendFacemesh(convertLandmarksToArray(faceLandmarkerResult.faceLandmarks));
+
+        setFooStatus('complete');
+        setFooNote(
+          'len: ' +
+            JSON.stringify({
+              message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
+            }).length
+        );
+
+        if (fooStatus !== 'complete' && false) {
+          fetch('/api/hume', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
+            }),
+          })
+            .then(res => res.json())
+            .then(data => {
+              setFooNote(data.humeResponse);
+              alert(JSON.stringify(data.humeResponse));
+              console.log(data);
+            })
+            .catch(error => {
+              alert('Error:' + error.toString());
+              console.error('Error:', error);
+            });
+        }
+        // sendFacemesh([faceLandmarkerResult.faceLandmarks as number[][]]);
 
         const matrix = new Matrix4().fromArray(faceLandmarkerResult.facialTransformationMatrixes![0].data);
         setRotation(new Euler().setFromRotationMatrix(matrix));
@@ -174,6 +216,7 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
     setup(); // 시작 시 캠 설정 및 감지 시작
 
     return () => {
+      // socketRef.current?.close();
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current); // 컴포넌트 언마운트 시 반복 작업 정리
       }
@@ -209,6 +252,10 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
           rotation={rotation}
         /> */}
       </Canvas>
+
+      {process.env.NODE_ENV === 'development' && <div>fooStatus: {fooStatus}</div>}
+      {process.env.NODE_ENV === 'development' && <div>fooNote: {fooNote}</div>}
+      {process.env.NODE_ENV === 'development' && <div>landmarks: {JSON.stringify(landmarks, null, 2)}</div>}
       {process.env.NODE_ENV === 'development' && <div>blendshapes: {JSON.stringify(blendshapes, null, 2)}</div>}
       {process.env.NODE_ENV === 'development' && <div>rotation: {JSON.stringify(rotation, null, 2)}</div>}
       {process.env.NODE_ENV === 'development' && <div>fooDetections: {JSON.stringify(fooDetections, null, 2)}</div>}

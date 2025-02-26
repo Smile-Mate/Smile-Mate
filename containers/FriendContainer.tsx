@@ -6,21 +6,22 @@ import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
 import { Progress } from '@/components/ui/progress';
 import { useFriendStore } from '@/stores/friendStore';
+import { josa } from 'es-hangul';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const getFooMessage = (level: number) => {
+const getFooMessage = (level: number, friendName: string) => {
   switch (level) {
     case 1:
-      return `재롱이는 현재 매우 우울한 상태이다. 길거리에서 무뚝뚝한 표정을 지으며 앉아 있다...`;
+      return `${josa(friendName, '은/는')} 현재 매우 우울한 상태이다. 길거리에서 무뚝뚝한 표정을 지으며 앉아 있다...`;
     case 2:
-      return `재롱이는 현재 다소 우울하다. 무뚝뚝한 표정을 지으며 앉아 있다...`;
+      return `${josa(friendName, '은/는')} 현재 다소 우울하다. 무뚝뚝한 표정을 지으며 앉아 있다...`;
     case 3:
-      return `재롱이는 현재 기분이 좋은 상태이다. 그치만 더 행복해질 수 있을 것 같다!`;
+      return `${josa(friendName, '은/는')} 현재 기분이 좋은 상태이다. 그치만 더 행복해질 수 있을 것 같다!`;
     case 4:
-      return `재롱이는 지금 매우 행복하다! 당신이 기쁜 웃음을 지어줘서 행복하게 있다!`;
+      return `${josa(friendName, '은/는')} 지금 매우 행복하다! 당신이 기쁜 웃음을 지어줘서 행복하게 있다!`;
     default:
-      return `재롱이의 기분을 알 수 없습니다.`;
+      return `${friendName}의 기분을 알 수 없습니다.`;
   }
 };
 
@@ -61,7 +62,7 @@ export default function FriendContainer() {
             <Image src="/images/jaerong.png" className="mx-auto" width={240} height={240} alt="friend" />
           </Link>
           <div className="flex flex-col gap-[16px] py-6 px-5 backdrop-blur-lg bg-neutral-700/60 rounded-[20px]">
-            <div className="whitespace-pre-wrap text-body2 text-white">{getFooMessage(getLevel())}</div>
+            <div className="whitespace-pre-wrap text-body2 text-white">{getFooMessage(getLevel(), friend.name)}</div>
             <Link href="/friend/smile">
               <Button
                 onClick={() => {

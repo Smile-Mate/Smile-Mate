@@ -4,11 +4,14 @@ import BottomPortal from '@/components/BottomPortal';
 import Bubble from '@/components/Bubble';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
+import { useFriendStore } from '@/stores/friendStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
 // TODO 폰트 적용하기
 export default function FriendContainer() {
+  const { friend } = useFriendStore();
+
   return (
     <>
       <Image src="/images/mission/mission1.jpg" className="mx-auto -z-50" fill alt="friend" />
@@ -26,7 +29,7 @@ export default function FriendContainer() {
       <BottomPortal>
         <div className="flex flex-col gap-[30px] py-4 px-5 backdrop-blur-lg bg-neutral-700/60 rounded-[20px]">
           <div className="flex flex-col items-center gap-2">
-            <div className="text-headline text-white mx-auto">사랑스러운 재롱이</div>
+            <div className="text-headline text-white mx-auto">{friend.name}</div>
             <Image src={'/svg/fooProgress.svg'} width={295} height={295} alt="progress" />
           </div>
           <Link href="/friend/smile">

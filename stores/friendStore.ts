@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface Friend {
-  name?: string;
+  name: string;
   score: number; // 1~100
   level: number; // 1~4, (Level 1: 1~25, Level 2: 25~50, Level 3: 50~75, Level 4: 75~100)
 }

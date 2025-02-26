@@ -7,11 +7,13 @@ import Container from '@/components/Container';
 import WebcamComponent from '@/components/dev/WebcamComponent';
 import PaddingBlock from '@/components/PaddingBlock';
 import PageIntro from '@/components/PageIntro';
+import { useFriendStore } from '@/stores/friendStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function FriendSmileContainer() {
+  const { friend } = useFriendStore();
   const [completed, setCompleted] = useState(false);
 
   return (
@@ -23,7 +25,7 @@ export default function FriendSmileContainer() {
           {completed && (
             <PageIntro
               title="웃음 지어주기 성공!"
-              description={`웃음을 지어준 덕분에\n재롱이를 집으로 데려올 수 있게 되었어요.`}
+              description={`웃음을 지어준 덕분에\n${friend.name}를 집으로 데려올 수 있게 되었어요.`}
             />
           )}
           {!completed && (

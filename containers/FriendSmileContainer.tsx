@@ -46,7 +46,7 @@ export default function FriendSmileContainer() {
         </PaddingBlock>
       </Container>
       <BottomPortal>
-        {!completed && <Button onClick={() => setCompleted(true)}>다음으로</Button>}
+        {/* {!completed && <Button onClick={() => setCompleted(true)}>다음으로</Button>} */}
         {completed && (
           <Link href={'/friend'}>
             <Button>홈으로</Button>

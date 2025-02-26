@@ -36,10 +36,17 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [expressionScore, setExpressionScore] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [happyCount, setHappyCount] = useState(0);
   const animationFrameIdRef = useRef<number | null>(null); // animationFrame ID 저장
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [detectCount, setDetectCount] = useState(0);
+
+  const [fooDetections, setFooDetections] = useState<
+    faceapi.WithFaceExpressions<{
+      detection: faceapi.FaceDetection;
+    }>[]
+  >([]);
 
   const setup = async () => {
     const filesetResolver = await FilesetResolver.forVisionTasks(
@@ -90,12 +97,13 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
     await loadFaceApiModels();
 
     const detect = async () => {
-      setDetectCount(prev => prev + 1);
+      // setDetectCount(prev => prev + 1);
 
       const detections = await faceapi
         .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
         .withFaceExpressions();
 
+      setFooDetections(detections);
       if (detections.length > 0 && detections[0].expressions) {
         const expressions = detections[0].expressions;
         const maxExpression = Object.keys(expressions).reduce((a, b) =>
@@ -108,10 +116,15 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
           setExpressionScore(score);
           if (maxExpression === 'happy' && score > 0.5) {
             // TODO happyCount가 쌓이는 속도가 기기에 따라 다름 -> 고치기
-            setHappyCount(prev => {
-              console.log('happyCount: ', prev + 1);
-              return prev + 1;
-            });
+
+            setTimeout(() => {
+              setIsSuccess(true);
+            }, 3000);
+            console.log('웃음 감지');
+            // setHappyCount(prev => {
+            //   console.log('happyCount: ', prev + 1);
+            //   return prev + 1;
+            // });
           } else {
             setHappyCount(0);
             console.log('점수 초기화');
@@ -125,11 +138,11 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
     detect();
   };
 
-  useEffect(() => {
-    if (happyCount >= 10) {
-      setIsSuccess(true);
-    }
-  }, [happyCount]);
+  // useEffect(() => {
+  //   if (happyCount >= 10) {
+  //     setIsSuccess(true);
+  //   }
+  // }, [happyCount]);
 
   const predict = async (faceLandmarker: FaceLandmarker) => {
     const nowInMs = Date.now();
@@ -170,14 +183,14 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
       {/* <div>happyCount:{happyCount}</div> */}
       <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
       {/* <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 100 }} autoPlay muted /> */}
-
-      <Canvas style={{ height: 240, width: '100%' }} camera={{ fov: 60, position: [0, 1, 5] }}>
+      <Canvas style={{ height: 240, width: '100%', transform: 'scaleX(-1)' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         <ambientLight intensity={1.5} />
         <pointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />
         <pointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
         <pointLight position={[0, 0, 10]} intensity={1.75} />
         <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} />
       </Canvas>
+      {process.env.NODE_ENV === 'development' && <div>{JSON.stringify(fooDetections, null, 2)}</div>}
     </div>
   );
 }

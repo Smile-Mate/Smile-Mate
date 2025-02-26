@@ -8,9 +8,12 @@ import { Canvas } from '@react-three/fiber';
 import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
+// import AvatarFBX from './AvatarFBX';
+// import AvatarElf from './AvatarElf';
 
 // const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';
 // const defaultAvatarUrl = '/characters/facial_blendshapes_test.glb';
+// const defaultAvatarUrl = '/characters/samantha_-_woman_head_with_blendshapes.glb';
 const defaultAvatarUrl = '/characters/test.glb';
 // 'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
 
@@ -189,8 +192,26 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
         <pointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
         <pointLight position={[0, 0, 10]} intensity={1.75} />
         <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} />
+        {/* <Avatar url={'/characters/harry.glb'} blendshapes={blendshapes} rotation={rotation} /> */}
+        {/* <AvatarFBX
+          url={'/characters/elf/Elf.fbx'}
+          textureUrl="/characters/botan/Just BaseColor_2.png"
+          blendshapes={blendshapes}
+          rotation={rotation}
+        /> */}
+        {/* <AvatarElf
+          url={'/characters/elf/Elf.fbx'}
+          bodyTexture={'/characters/elf/Body.png'}
+          clothesTexture={'/characters/elf/clothes.png'}
+          faceTexture={'/characters/elf/Face.png'}
+          hairTexture={'/characters/elf/Hair.png'}
+          blendshapes={blendshapes}
+          rotation={rotation}
+        /> */}
       </Canvas>
-      {process.env.NODE_ENV === 'development' && <div>{JSON.stringify(fooDetections, null, 2)}</div>}
+      {process.env.NODE_ENV === 'development' && <div>blendshapes: {JSON.stringify(blendshapes, null, 2)}</div>}
+      {process.env.NODE_ENV === 'development' && <div>rotation: {JSON.stringify(rotation, null, 2)}</div>}
+      {process.env.NODE_ENV === 'development' && <div>fooDetections: {JSON.stringify(fooDetections, null, 2)}</div>}
     </div>
   );
 }

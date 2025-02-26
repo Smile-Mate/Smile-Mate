@@ -8,6 +8,7 @@ import Container from '@/components/Container';
 import { useFriendStore } from '@/stores/friendStore';
 import Image from 'next/image';
 import Link from 'next/link';
+import { josa } from 'es-hangul';
 
 export default function FriendMissionContainer() {
   const { friend } = useFriendStore();
@@ -23,7 +24,10 @@ export default function FriendMissionContainer() {
               Chapter 1
             </div>
             <div className="text-display4 text-neutral-50">길에서 만난 {friend.name}</div>
-            <div className="text-body2 text-neutral-100 whitespace-pre-wrap text-center">{`${friend.name}와 길에서 만났어요!\n이러쿵 저러쿵 한번 이야기해볼까요?`}</div>
+            <div className="text-body2 text-neutral-100 whitespace-pre-wrap text-center">{`${josa(
+              friend.name,
+              '을/를'
+            )} 길에서 만났어요!\n이러쿵 저러쿵 한번 이야기해볼까요?`}</div>
           </div>
           <Bubble text="나를 집으로 데려가라" className="mt-10" />
           <Image src="/images/jaerong.png" width={300} height={300} alt="friend" />

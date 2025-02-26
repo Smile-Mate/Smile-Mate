@@ -1,7 +1,6 @@
 'use client';
 
 import BottomPortal from '@/components/BottomPortal';
-import Bubble from '@/components/Bubble';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
@@ -33,7 +32,13 @@ export default function FriendContainer() {
       </Container>
       <BottomPortal>
         <div className="flex flex-col gap-4">
-          {friend.message && <Bubble text={friend.message} className="" />}
+          {friend.message && (
+            <div>
+              <div className="text-body2 bg-white/30 px-[30px] py-3 rounded-[18px] backdrop-blur-lg whitespace-pre-wrap text-center">
+                {friend.message}
+              </div>
+            </div>
+          )}
 
           <Link href="/friend/mission/1">
             <Image src="/images/jaerong.png" className="mx-auto" width={240} height={240} alt="friend" />

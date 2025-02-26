@@ -9,6 +9,8 @@ import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 import { convertLandmarksToArray } from '@/utils/humeUtils';
+import AvatarRabbit from './AvatarRabbit';
+import AvatarRabbit2 from './AvatarRabbit2';
 // import AvatarFBX from './AvatarFBX';
 // import AvatarElf from './AvatarElf';
 
@@ -187,7 +189,8 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
         //     })
         // );
 
-        if (fooStatus !== 'complete') {
+        // NOTE 임시제거
+        if (fooStatus !== 'complete' && false) {
           fetch('/api/hume', {
             method: 'POST',
             headers: {
@@ -240,7 +243,9 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
         <pointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />
         <pointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
         <pointLight position={[0, 0, 10]} intensity={1.75} />
-        <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} />
+        <AvatarRabbit2 blendshapes={blendshapes} rotation={rotation} />
+        {/* <AvatarRabbit blendshapes={blendshapes} rotation={rotation} /> */}
+        {/* <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <Avatar url={'/characters/harry.glb'} blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarFBX
           url={'/characters/elf/Elf.fbx'}

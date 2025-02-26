@@ -24,6 +24,7 @@ export default function Avatar({
   // NOTE dev
   useEffect(() => {
     console.log('nodes', nodes);
+    // console.log(JSON.stringify(nodes.Wolf3D_Avatar, null, 2));
     console.log('blendshapes', blendshapes);
     console.log('rotation', rotation);
     // if (nodes.CC_Base_BoneRoot_01) nodes.CC_Base_BoneRoot_01.rotation.set(0, 0, 0);

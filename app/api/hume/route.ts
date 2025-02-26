@@ -26,7 +26,7 @@ class HumeSocketManager {
     if (!this.isConnected || !this.socket) {
       this.socket = this.humeClient.expressionMeasurement.stream.connect({
         config: {
-          language: {},
+          facemesh: {},
         },
       });
       this.isConnected = true;
@@ -36,20 +36,23 @@ class HumeSocketManager {
 
   public async sendFacemesh(landmarks: number[][][]) {
     const socket = await this.getSocket();
-    const result = await socket.sendFacemesh({ landmarks: landmarks });
+    const result = await socket.sendFacemesh({ landmarks: landmarks, config: { facemesh: {} } });
     return result;
   }
 }
 
 export async function POST(req: NextRequest) {
+  // NOTE HumeAI의 sendFacemesh 함수가 아직 미완성인것 같다. 도큐먼트에도 없고.. client에서 batch 로 시도해보자
   try {
-    const { message } = await req.json();
+    // const { message } = await req.json();
     // console.log('message:', JSON.stringify(message));
+    // console.log('message:', message);
 
-    const socketManager = HumeSocketManager.getInstance();
-    const humeResponse = await socketManager.sendFacemesh(message);
+    // const socketManager = HumeSocketManager?.getInstance();
+    // const humeResponse = await socketManager.sendFacemesh(message);
 
-    return NextResponse.json({ humeResponse });
+    return NextResponse.json({});
+    // return NextResponse.json({ humeResponse });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({ error: 'Failed to generate response' }, { status: 500 });

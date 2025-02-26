@@ -31,8 +31,12 @@ export function convertLandmarksToArray(landmarkObjects: NormalizedLandmark[][])
     // 각 랜드마크에 대해 처리
     for (let landmarkIndex = 0; landmarkIndex < face.length; landmarkIndex++) {
       const landmark = face[landmarkIndex];
-      // x, y, z 좌표를 추출하여 배열로 변환
-      faceArray.push([landmark.x, landmark.y, landmark.z]);
+      // x, y, z 좌표를 추출하여 배열로 변환하고 소수점 6자리로 제한
+      faceArray.push([
+        parseFloat(landmark.x.toFixed(6)),
+        parseFloat(landmark.y.toFixed(6)),
+        parseFloat(landmark.z.toFixed(6)),
+      ]);
     }
 
     result.push(faceArray);

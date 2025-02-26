@@ -180,8 +180,14 @@ export default function WebcamComponent({ setIsSuccess }: { setIsSuccess: (succe
               message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
             }).length
         );
+        // setFooNote(
+        //   'data: ' +
+        //     JSON.stringify({
+        //       message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
+        //     })
+        // );
 
-        if (fooStatus !== 'complete' && false) {
+        if (fooStatus !== 'complete') {
           fetch('/api/hume', {
             method: 'POST',
             headers: {

@@ -7,15 +7,26 @@ import Container from '@/components/Container';
 import WebcamComponent from '@/components/dev/WebcamComponent';
 import PaddingBlock from '@/components/PaddingBlock';
 import PageIntro from '@/components/PageIntro';
+import { Progress } from '@/components/ui/progress';
 import { useFriendStore } from '@/stores/friendStore';
-import { josa } from 'es-hangul';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function FriendSmileContainer() {
-  const { friend, setFriend } = useFriendStore();
+  const { friend, setFriend, addScore } = useFriendStore();
   const [completed, setCompleted] = useState(false);
+
+  useEffect(() => {
+    if (completed) {
+      setFriend({
+        message: `방금 지어준 웃음은 굉장히 밝았던 것 같아!
+입꼬리를 조금만 더 올려보면
+더 환한 웃음이 될 것 같은데!`,
+      });
+      addScore(20);
+    }
+  }, [completed, setFriend, addScore]);
 
   return (
     <>
@@ -26,7 +37,7 @@ export default function FriendSmileContainer() {
           {completed && (
             <PageIntro
               title="웃음 지어주기 성공!"
-              description={`웃음을 지어준 덕분에\n${josa(friend.name, '을/를')} 집으로 데려올 수 있게 되었어요.`}
+              description={`웃음을 지어준 덕분에\n${friend.name}의 기분이 조금 나아졌어요.`}
             />
           )}
           {!completed && (
@@ -39,8 +50,8 @@ export default function FriendSmileContainer() {
           )}
           {completed && (
             <div className="flex flex-col gap-1 justify-center items-center mt-5">
-              <Image src={'/svg/fooProgress2.svg'} width={295} height={295} alt="progress" />
-              <div className="text-body1 text-neutral-700">20% 상승</div>
+              <Progress value={friend.score} className="w-full" />
+              <div className="text-body1 text-neutral-700">20점 상승</div>
             </div>
           )}
         </PaddingBlock>
@@ -49,17 +60,7 @@ export default function FriendSmileContainer() {
         {/* {!completed && <Button onClick={() => setCompleted(true)}>다음으로</Button>} */}
         {completed && (
           <Link href={'/friend'}>
-            <Button
-              onClick={() =>
-                setFriend({
-                  message: `방금 지어준 웃음은 굉장히 밝았던 것 같아!
-입꼬리를 조금만 더 올려보면
-더 환한 웃음이 될 것 같은데!`,
-                })
-              }
-            >
-              홈으로
-            </Button>
+            <Button>홈으로</Button>
           </Link>
         )}
       </BottomPortal>

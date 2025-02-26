@@ -4,6 +4,7 @@ import BottomPortal from '@/components/BottomPortal';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import PaddingBlock from '@/components/PaddingBlock';
+import { Progress } from '@/components/ui/progress';
 import { useFriendStore } from '@/stores/friendStore';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,11 +17,12 @@ export default function FriendContainer() {
     <>
       <Image src="/images/mission/mission1.jpg" className="mx-auto -z-50" fill alt="friend" />
       <Container backgroundColor="transparent">
-        <PaddingBlock>
+        <PaddingBlock className="relative">
           <div className="mt-10 flex flex-col p-5 backdrop-blur-lg bg-neutral-700/60 rounded-[20px]">
             <div className="flex flex-col items-center gap-2">
               <div className="text-headline text-white mx-auto">{friend.name}</div>
-              <Image src={'/svg/fooProgress.svg'} width={295} height={295} alt="progress" />
+              <Progress value={friend.score} className="w-full" />
+              <div className="absolute top-[58.5px] right-9 text-neutral-700 text-caption1">{friend.score}점</div>
             </div>
           </div>
         </PaddingBlock>

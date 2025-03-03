@@ -5,19 +5,21 @@ import { useEffect, useState, useRef } from 'react';
 import { FaceLandmarker, FaceLandmarkerOptions, FilesetResolver, NormalizedLandmark } from '@mediapipe/tasks-vision';
 import { Color, Euler, Matrix4 } from 'three';
 import { Canvas } from '@react-three/fiber';
-import Avatar from './Avatar';
+// import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 import { convertLandmarksToArray } from '@/utils/humeUtils';
+import Image from 'next/image';
+// import AvataPotato from './AvataPotato';
 // import AvatarRabbit from './AvatarRabbit';
 // import AvatarRabbit2 from './AvatarRabbit2';
 // import AvatarFBX from './AvatarFBX';
 // import AvatarElf from './AvatarElf';
 
+// const defaultAvatarUrl = '/characters/test.glb';
 // const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';
 // const defaultAvatarUrl = '/characters/facial_blendshapes_test.glb';
 // const defaultAvatarUrl = '/characters/samantha_-_woman_head_with_blendshapes.glb';
-const defaultAvatarUrl = '/characters/test.glb';
 // 'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
 
 const options: FaceLandmarkerOptions = {
@@ -240,6 +242,7 @@ export default function WebcamComponent({
 
   return (
     <div className="flex flex-col items-center justify-center">
+      <Image src="/images/jaerong.png" className="mx-auto" width={300} height={300} alt="friend" />
       {/* <div>detectCount:{detectCount}</div> */}
       {/* <div>happyCount:{happyCount}</div> */}
       <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
@@ -249,9 +252,11 @@ export default function WebcamComponent({
         <pointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />
         <pointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
         <pointLight position={[0, 0, 10]} intensity={1.75} />
+
+        {/* <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} /> */}
+        {/* <AvataPotato blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarRabbit2 blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarRabbit blendshapes={blendshapes} rotation={rotation} /> */}
-        <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} />
         {/* <Avatar url={'/characters/harry.glb'} blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarFBX
           url={'/characters/elf/Elf.fbx'}

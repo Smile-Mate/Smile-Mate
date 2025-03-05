@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useGraph } from '@react-three/fiber';
 import { Object3D, Euler } from 'three';
 
 interface AvatarProps {
@@ -20,8 +20,11 @@ export default function AvatarPotato({
   animationIndex = 0, // 기본값으로 첫 번째 애니메이션 선택
 }: AvatarProps) {
   // GLTF 모델 로드
-  // const { scene, animations } = useGLTF('/characters/potato.gltf');
-  const { scene, animations } = useGLTF('/characters/vtuber_convert_from_blend.glb');
+  const { scene, animations } = useGLTF('/characters/potato.gltf');
+  const { nodes } = useGraph(scene);
+  // const { scene, animations } = useGLTF('/characters/vtuber_convert_from_blend.glb');
+  const fooMorph = nodes.Face_17.children[0];
+  console.log('fooMorph', fooMorph);
 
   console.log('scene', scene);
   console.log('animations', animations);
@@ -52,15 +55,15 @@ export default function AvatarPotato({
     }
 
     // 헤드 메시 찾기
-    const meshes = Object.values(scene.children).filter(
-      child =>
-        child.name.includes('Wolf3D_Head') ||
-        child.name.includes('Wolf3D_Teeth') ||
-        child.name.includes('Wolf3D_Beard') ||
-        child.name.includes('Wolf3D_Avatar')
-    );
+    // const meshes = Object.values(scene.children).filter(
+    //   child =>
+    //     child.name.includes('Wolf3D_Head') ||
+    //     child.name.includes('Wolf3D_Teeth') ||
+    //     child.name.includes('Wolf3D_Beard') ||
+    //     child.name.includes('Wolf3D_Avatar')
+    // );
 
-    setHeadMeshes(meshes);
+    setHeadMeshes([fooMorph]);
 
     // 컴포넌트 언마운트 시 애니메이션 정리
     return () => {
@@ -77,13 +80,15 @@ export default function AvatarPotato({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       headMeshes.forEach((mesh: any) => {
         blendshapes.forEach(element => {
-          const index = mesh.morphTargetDictionary?.[element.categoryName];
-          if (index !== undefined && index >= 0) {
-            mesh.morphTargetInfluences[index] = element.score;
-          }
+          // const index = mesh.morphTargetDictionary?.[element.categoryName];
+          // if (index !== undefined && index >= 0) {
+          mesh.morphTargetInfluences[Math.floor(Math.random() * 20)] = element.score;
+          // }
         });
       });
     }
+
+    // if (Math.floor(Math.random() * 20) === 1) copyToClipboardWeb(JSON.stringify(blendshapes));
 
     // 회전 적용
     if (rotation) {
@@ -101,7 +106,7 @@ export default function AvatarPotato({
     }
   });
 
-  return <primitive object={scene} position={[0, 0, 0]} scale={[3, 3, 3]} />;
+  return <primitive object={scene} position={[0, 0, 0]} scale={[2, 2, 2]} />;
 }
 
 // 모델 프리로드

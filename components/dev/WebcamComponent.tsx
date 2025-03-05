@@ -5,18 +5,10 @@ import { useEffect, useState, useRef } from 'react';
 import { FaceLandmarker, FaceLandmarkerOptions, FilesetResolver, NormalizedLandmark } from '@mediapipe/tasks-vision';
 import { Color, Euler, Matrix4 } from 'three';
 import { Canvas } from '@react-three/fiber';
-// import Avatar from './Avatar';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 import { convertLandmarksToArray } from '@/utils/humeUtils';
 import Image from 'next/image';
-// import AvataPotato from './AvataPotato';
-// import AvatarRabbit from './AvatarRabbit';
-// import AvataPotato from './AvataPotato';
-// import AvatarRabbit from './AvatarRabbit';
-// import AvatarRabbit2 from './AvatarRabbit2';
-// import AvatarFBX from './AvatarFBX';
-// import AvatarElf from './AvatarElf';
 
 // const defaultAvatarUrl = '/characters/test.glb';
 // const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';

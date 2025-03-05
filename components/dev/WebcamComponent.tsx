@@ -12,6 +12,8 @@ import { convertLandmarksToArray } from '@/utils/humeUtils';
 import Image from 'next/image';
 // import AvataPotato from './AvataPotato';
 // import AvatarRabbit from './AvatarRabbit';
+// import AvataPotato from './AvataPotato';
+// import AvatarRabbit from './AvatarRabbit';
 // import AvatarRabbit2 from './AvatarRabbit2';
 // import AvatarFBX from './AvatarFBX';
 // import AvatarElf from './AvatarElf';

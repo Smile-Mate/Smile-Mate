@@ -1,73 +1,102 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useGLTF } from '@react-three/drei';
-import { useFrame, useGraph } from '@react-three/fiber';
 import React, { useEffect, useState } from 'react';
+import { useGLTF, useAnimations } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import { Object3D, Euler } from 'three';
 
-export default function AvataPotato({ blendshapes, rotation }: { blendshapes: any[]; rotation: Euler | null }) {
-  // const { scene } = useGLTF('/characters/tuber_vtuber.glb');
-  const { scene } = useGLTF('/characters/potato.gltf');
-  const { nodes } = useGraph(scene);
-  // const fbx = useFBX(url);
-  // const { nodes } = useGraph(fbx);
+interface AvatarProps {
+  blendshapes: Array<{
+    categoryName: string;
+    score: number;
+  }>;
+  rotation: Euler | null;
+  animationIndex?: number; // 재생할 애니메이션 인덱스
+}
+
+export default function AvatarPotato({
+  blendshapes,
+  rotation,
+  animationIndex = 0, // 기본값으로 첫 번째 애니메이션 선택
+}: AvatarProps) {
+  // GLTF 모델 로드
+  const { scene, animations } = useGLTF('/characters/potato.gltf');
+
+  // 애니메이션 훅 추가
+  const { actions } = useAnimations(animations, scene);
+
+  // 헤드 메시 상태 관리
   const [headMeshes, setHeadMeshes] = useState<Object3D[]>([]);
 
-  // NOTE dev
+  // 애니메이션 초기화 및 재생
   useEffect(() => {
-    console.log('nodes', nodes);
-    // console.log(JSON.stringify(nodes.Wolf3D_Avatar, null, 2));
-    console.log('blendshapes', blendshapes);
-    console.log('rotation', rotation);
-    // if (nodes.CC_Base_BoneRoot_01) nodes.CC_Base_BoneRoot_01.rotation.set(0, 0, 0);
-  }, [nodes, blendshapes, rotation]);
+    // 애니메이션이 존재하는지 확인
+    if (animations.length > 0 && actions) {
+      const action = actions[animationIndex];
+      console.log('action', action);
+      if (action) {
+        // 애니메이션 설정 및 재생
+        action.reset(); // 애니메이션 리셋
+        action.play(); // 애니메이션 재생
 
-  useEffect(() => {
-    const meshes = [];
-    if (nodes.Wolf3D_Head) meshes.push(nodes.Wolf3D_Head);
-    if (nodes.Wolf3D_Teeth) meshes.push(nodes.Wolf3D_Teeth);
-    if (nodes.Wolf3D_Beard) meshes.push(nodes.Wolf3D_Beard);
-    if (nodes.Wolf3D_Avatar) meshes.push(nodes.Wolf3D_Avatar);
-    if (nodes.Wolf3D_Head_Custom) meshes.push(nodes.Wolf3D_Head_Custom);
-    // if (nodes.Object_65) meshes.push(nodes.Object_65);
+        // 필요한 경우 추가 설정
+        // action.setEffectiveTimeScale(1); // 재생 속도 설정
+        // action.setLoop(THREE.LoopRepeat, Infinity); // 반복 설정
+      }
+    }
+
+    // 헤드 메시 찾기
+    const meshes = Object.values(scene.children).filter(
+      child =>
+        child.name.includes('Wolf3D_Head') ||
+        child.name.includes('Wolf3D_Teeth') ||
+        child.name.includes('Wolf3D_Beard') ||
+        child.name.includes('Wolf3D_Avatar')
+    );
 
     setHeadMeshes(meshes);
-  }, [nodes]);
 
-  // scene.traverse((obj: any) => {
-  //   if (obj.isMesh) {
-  //     obj.material.color = new Color(1.2, 1.2, 1.2);
-  //   }
-  // });
+    // 컴포넌트 언마운트 시 애니메이션 정리
+    return () => {
+      if (actions) {
+        Object.values(actions).forEach(action => action?.stop());
+      }
+    };
+  }, [scene, animations, actions, animationIndex]);
 
-  // TODO 맥북에서 blendshapes, categoryName, score 확인하기
+  // 프레임마다 blendshapes와 회전 처리
   useFrame(() => {
+    // Blendshapes 적용
     if (blendshapes.length > 0) {
-      blendshapes.forEach((element: any) => {
-        headMeshes.forEach((mesh: any) => {
-          // const index = mesh.morphTargetDictionary[element.index];
-          const index = mesh.morphTargetDictionary[element.categoryName];
-          if (index >= 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      headMeshes.forEach((mesh: any) => {
+        blendshapes.forEach(element => {
+          const index = mesh.morphTargetDictionary?.[element.categoryName];
+          if (index !== undefined && index >= 0) {
             mesh.morphTargetInfluences[index] = element.score;
           }
         });
       });
     }
 
+    // 회전 적용
     if (rotation) {
-      if (nodes.Head) nodes.Head.rotation.set(rotation.x, rotation.y, rotation.z);
-      if (nodes.Neck) nodes.Neck.rotation.set(rotation.x / 5 + 0.3, rotation.y / 5, rotation.z / 5);
-      if (nodes.Spine2) nodes.Spine2.rotation.set(rotation.x / 10, rotation.y / 10, rotation.z / 10);
+      // 본 회전 로직
+      const findAndRotateBone = (boneName: string, rotationFactor: number = 1) => {
+        const bone = scene.getObjectByName(boneName);
+        if (bone) {
+          bone.rotation.set(rotation.x * rotationFactor, rotation.y * rotationFactor, rotation.z * rotationFactor);
+        }
+      };
+
+      findAndRotateBone('Head');
+      findAndRotateBone('Neck', 0.2);
+      findAndRotateBone('Spine2', 0.1);
     }
   });
 
-  // return <primitive object={scene} position={[0, -4.8, 3]} scale={[10, 10, 10]} />;
-  // return <primitive object={scene} position={[0, -4.8, 3]} scale={[5, 5, 5]} />;
-  return <primitive object={scene} position={[0, -4.8, 3]} scale={[3.6, 3.6, 3.6]} />;
-  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[2.8, 2.8, 2.8]} />;
-  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[2.4, 2.4, 2.4]} />;
-  // return <primitive object={scene} position={[0, -4.0, 3]} scale={[0.03, 0.03, 0.03]} />;
-  // return <primitive object={scene} position={[0, -4.8, 3]} scale={[4, 4, 4]} />;
-  // return <primitive object={fbx} position={[0, -4.8, 3]} scale={[0.02, 0.02, 0.02]} />;
+  return <primitive object={scene} position={[0, 0, 0]} scale={[3, 3, 3]} />;
 }
+
+// 모델 프리로드
+useGLTF.preload('/characters/potato.gltf');

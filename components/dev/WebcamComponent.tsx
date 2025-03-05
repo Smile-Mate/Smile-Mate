@@ -256,7 +256,7 @@ export default function WebcamComponent({
         <pointLight position={[0, 0, 10]} intensity={1.75} />
 
         {/* <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} /> */}
-        {/* <AvataPotato blendshapes={blendshapes} rotation={rotation} /> */}
+        {/* <AvatarPotato blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarRabbit2 blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarRabbit blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <Avatar url={'/characters/harry.glb'} blendshapes={blendshapes} rotation={rotation} /> */}

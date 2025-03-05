@@ -20,10 +20,16 @@ export default function AvatarPotato({
   animationIndex = 0, // 기본값으로 첫 번째 애니메이션 선택
 }: AvatarProps) {
   // GLTF 모델 로드
-  const { scene, animations } = useGLTF('/characters/potato.gltf');
+  // const { scene, animations } = useGLTF('/characters/potato.gltf');
+  const { scene, animations } = useGLTF('/characters/vtuber_convert_from_blend.glb');
+
+  console.log('scene', scene);
+  console.log('animations', animations);
 
   // 애니메이션 훅 추가
   const { actions } = useAnimations(animations, scene);
+
+  console.log('actions', actions);
 
   // 헤드 메시 상태 관리
   const [headMeshes, setHeadMeshes] = useState<Object3D[]>([]);

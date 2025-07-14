@@ -9,6 +9,7 @@ import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 import { convertLandmarksToArray } from '@/utils/humeUtils';
 import Image from 'next/image';
+import AvatarReal from './AvatarReal';
 
 // const defaultAvatarUrl = '/characters/test.glb';
 // const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';
@@ -184,35 +185,6 @@ export default function WebcamComponent({
               message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
             }).length
         );
-        // setFooNote(
-        //   'data: ' +
-        //     JSON.stringify({
-        //       message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
-        //     })
-        // );
-
-        // NOTE 임시제거
-        if (fooStatus !== 'complete' && false) {
-          fetch('/api/hume', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              message: convertLandmarksToArray(faceLandmarkerResult.faceLandmarks),
-            }),
-          })
-            .then(res => res.json())
-            .then(data => {
-              setFooNote(data.humeResponse);
-              alert(JSON.stringify(data.humeResponse));
-              console.log(data);
-            })
-            .catch(error => {
-              alert('Error:' + error.toString());
-              console.error('Error:', error);
-            });
-        }
         // sendFacemesh([faceLandmarkerResult.faceLandmarks as number[][]]);
 
         const matrix = new Matrix4().fromArray(faceLandmarkerResult.facialTransformationMatrixes![0].data);
@@ -236,7 +208,7 @@ export default function WebcamComponent({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Image src="/images/jaerong.png" className="mx-auto" width={300} height={300} alt="friend" />
+      {/* <Image src="/images/jaerong.png" className="mx-auto" width={300} height={300} alt="friend" />*/}
       {/* <div>detectCount:{detectCount}</div> */}
       {/* <div>happyCount:{happyCount}</div> */}
       <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
@@ -252,12 +224,12 @@ export default function WebcamComponent({
         {/* <AvatarRabbit2 blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <AvatarRabbit blendshapes={blendshapes} rotation={rotation} /> */}
         {/* <Avatar url={'/characters/harry.glb'} blendshapes={blendshapes} rotation={rotation} /> */}
-        {/* <AvatarFBX
-          url={'/characters/elf/Elf.fbx'}
-          textureUrl="/characters/botan/Just BaseColor_2.png"
+        <AvatarReal
+          url={'/characters/jaerong/main.fbx'}
+          textureUrl="/characters/jaerong/texture"
           blendshapes={blendshapes}
           rotation={rotation}
-        /> */}
+        />
         {/* <AvatarElf
           url={'/characters/elf/Elf.fbx'}
           bodyTexture={'/characters/elf/Body.png'}
@@ -269,9 +241,6 @@ export default function WebcamComponent({
         /> */}
       </Canvas>
 
-      {process.env.NODE_ENV === 'development' && <div>fooStatus: {fooStatus}</div>}
-      {process.env.NODE_ENV === 'development' && <div>fooNote: {fooNote}</div>}
-      {process.env.NODE_ENV === 'development' && <div>landmarks: {JSON.stringify(landmarks, null, 2)}</div>}
       {process.env.NODE_ENV === 'development' && <div>blendshapes: {JSON.stringify(blendshapes, null, 2)}</div>}
       {process.env.NODE_ENV === 'development' && <div>rotation: {JSON.stringify(rotation, null, 2)}</div>}
       {process.env.NODE_ENV === 'development' && <div>fooDetections: {JSON.stringify(fooDetections, null, 2)}</div>}

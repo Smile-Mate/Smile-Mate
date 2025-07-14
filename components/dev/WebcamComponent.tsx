@@ -201,7 +201,7 @@ export default function WebcamComponent({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
+      <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted playsInline />
       <Canvas style={{ height: 240, width: '100%', transform: 'scaleX(-1)' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         <ambientLight intensity={1.5} />
         <pointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />

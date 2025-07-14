@@ -8,14 +8,7 @@ import { Canvas } from '@react-three/fiber';
 import * as faceapi from 'face-api.js';
 import { loadFaceApiModels } from '@/utils/faceApiUtil';
 import { convertLandmarksToArray } from '@/utils/humeUtils';
-import Image from 'next/image';
 import AvatarReal from './AvatarReal';
-
-// const defaultAvatarUrl = '/characters/test.glb';
-// const defaultAvatarUrl = '/characters/realistic_elf_warrior_from_cc.glb';
-// const defaultAvatarUrl = '/characters/facial_blendshapes_test.glb';
-// const defaultAvatarUrl = '/characters/samantha_-_woman_head_with_blendshapes.glb';
-// 'https://models.readyplayer.me/66af16194d3eefd8c86cc4b2.glb?morphTargets=ARKit&textureAtlas=1024';
 
 const options: FaceLandmarkerOptions = {
   baseOptions: {
@@ -208,42 +201,19 @@ export default function WebcamComponent({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      {/* <Image src="/images/jaerong.png" className="mx-auto" width={300} height={300} alt="friend" />*/}
-      {/* <div>detectCount:{detectCount}</div> */}
-      {/* <div>happyCount:{happyCount}</div> */}
       <video ref={videoRef} id="video" style={{ width: '1px', height: '1px', opacity: 0 }} autoPlay muted />
-      {/* <video ref={videoRef} id="video" style={{ width: '300px', height: '300px', opacity: 100 }} autoPlay muted /> */}
       <Canvas style={{ height: 240, width: '100%', transform: 'scaleX(-1)' }} camera={{ fov: 60, position: [0, 1, 5] }}>
         <ambientLight intensity={1.5} />
         <pointLight position={[10, 10, 10]} color={new Color(1, 1, 0)} intensity={1.75} />
         <pointLight position={[-10, 0, 10]} color={new Color(1, 0, 0)} intensity={1.75} />
         <pointLight position={[0, 0, 10]} intensity={1.75} />
-
-        {/* <Avatar url={defaultAvatarUrl} blendshapes={blendshapes} rotation={rotation} /> */}
-        {/* <AvatarPotato blendshapes={blendshapes} rotation={rotation} /> */}
-        {/* <AvatarRabbit2 blendshapes={blendshapes} rotation={rotation} /> */}
-        {/* <AvatarRabbit blendshapes={blendshapes} rotation={rotation} /> */}
-        {/* <Avatar url={'/characters/harry.glb'} blendshapes={blendshapes} rotation={rotation} /> */}
         <AvatarReal
           url={'/characters/jaerong/main.fbx'}
           textureUrl="/characters/jaerong/texture"
           blendshapes={blendshapes}
           rotation={rotation}
         />
-        {/* <AvatarElf
-          url={'/characters/elf/Elf.fbx'}
-          bodyTexture={'/characters/elf/Body.png'}
-          clothesTexture={'/characters/elf/clothes.png'}
-          faceTexture={'/characters/elf/Face.png'}
-          hairTexture={'/characters/elf/Hair.png'}
-          blendshapes={blendshapes}
-          rotation={rotation}
-        /> */}
       </Canvas>
-
-      {process.env.NODE_ENV === 'development' && <div>blendshapes: {JSON.stringify(blendshapes, null, 2)}</div>}
-      {process.env.NODE_ENV === 'development' && <div>rotation: {JSON.stringify(rotation, null, 2)}</div>}
-      {process.env.NODE_ENV === 'development' && <div>fooDetections: {JSON.stringify(fooDetections, null, 2)}</div>}
     </div>
   );
 }

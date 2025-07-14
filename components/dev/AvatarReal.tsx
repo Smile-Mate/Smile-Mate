@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { OrbitControls, useFBX } from '@react-three/drei';
+import { useFBX } from '@react-three/drei';
 import { useGraph, useFrame, useLoader } from '@react-three/fiber';
 import React, { useEffect, useState } from 'react';
 import { Object3D, Euler, RepeatWrapping, MeshStandardMaterial, TextureLoader } from 'three';

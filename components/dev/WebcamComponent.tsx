@@ -67,7 +67,7 @@ export default function WebcamComponent({
     // TODO ref 에 대해 더 알아보기
     navigator.mediaDevices
       .getUserMedia({
-        video: { width: 1280, height: 720 },
+        video: { width: 320, height: 240 },
         audio: false,
       })
       .then(function (stream) {
@@ -139,7 +139,8 @@ export default function WebcamComponent({
         }
       }
 
-      animationFrameIdRef.current = requestAnimationFrame(detect);
+      // animationFrameIdRef.current = requestAnimationFrame(detect);
+      animationFrameIdRef.current = window.setTimeout(detect, 500);
     };
 
     detect();
@@ -194,7 +195,8 @@ export default function WebcamComponent({
     return () => {
       // socketRef.current?.close();
       if (animationFrameIdRef.current) {
-        cancelAnimationFrame(animationFrameIdRef.current); // 컴포넌트 언마운트 시 반복 작업 정리
+        // cancelAnimationFrame(animationFrameIdRef.current); // 컴포넌트 언마운트 시 반복 작업 정리
+        clearInterval(animationFrameIdRef.current);
       }
     };
   }, []);
